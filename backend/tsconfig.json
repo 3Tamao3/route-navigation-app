@@ -1,31 +1,23 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
     "strict": true,
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "declaration": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest"],
+    "rootDir": ".",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "incremental": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es6",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "ignoreDeprecations": "5.0",
-    "ignoreDeprecations": "6.0",
-    "incremental": true,
-    "skipLibCheck": true,
     "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "rootDir": "./src"
+    "noImplicitAny": false
   },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.ts", "prisma/prisma.config.ts", "../generated/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
