@@ -1,6 +1,6 @@
 allowBuilds:
   '@nestjs/core': true
-  '@prisma/cli': set this to true or false
+  '@prisma/cli': true
   '@prisma/engines': true
   bcrypt: true
   esbuild: true

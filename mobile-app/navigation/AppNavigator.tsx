@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../App';
 import MapScreen from '../screens/MapScreen';
@@ -34,26 +35,42 @@ const AppNavigator = ({ navigation, route }: Props) => {
         name="Map"
         component={MapScreen}
         initialParams={{ token, username }}
-        options={{ title: 'Map', tabBarLabel: 'Map' }}
+        options={{
+          title: 'Map',
+          tabBarLabel: 'Map',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="map-outline" size={size} color={color} />
+          ),
+        }}
       />
       <Tab.Screen
         name="History"
         component={HistoryScreen}
         initialParams={{ token, username }}
-        options={{ title: 'History', tabBarLabel: 'History' }}
+        options={{
+          title: 'History',
+          tabBarLabel: 'History',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="time-outline" size={size} color={color} />
+          ),
+        }}
       />
       <Tab.Screen
         name={'Logout' as any}
         component={MapScreen}
         options={{
           tabBarLabel: 'Logout',
+          tabBarIcon: ({ size }) => (
+            <Ionicons name="log-out-outline" size={size} color="#e53935" />
+          ),
           tabBarButton: (props) => (
             <TouchableOpacity
               {...props}
               onPress={() => navigation.replace('Auth')}
               style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
             >
-              <Text style={{ color: '#e53935', fontWeight: '600', fontSize: 12 }}>Logout</Text>
+              <Ionicons name="log-out-outline" size={22} color="#e53935" />
+              <Text style={{ color: '#e53935', fontWeight: '600', fontSize: 10, marginTop: 2 }}>Logout</Text>
             </TouchableOpacity>
           ),
         }}

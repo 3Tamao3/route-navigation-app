@@ -5,7 +5,8 @@ import { PrismaPg } from '@prisma/adapter-pg';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
-    super({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL as string }) });
+    const url = process.env.DATABASE_URL ?? 'postgresql://postgres:postgres@localhost:5432/navigation_app';
+    super({ adapter: new PrismaPg({ connectionString: url }) });
   }
 
   async onModuleInit() {

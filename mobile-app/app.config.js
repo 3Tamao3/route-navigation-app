@@ -2,8 +2,8 @@ require('dotenv').config();
 
 module.exports = {
   expo: {
-    name: 'mobile-app',
-    slug: 'mobile-app',
+    name: 'Navigation App',
+    slug: 'NavigationApp',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
