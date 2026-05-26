@@ -9,10 +9,10 @@ export class RoutesController {
 
   @Post()
   saveRoute(
-    @Body() body: { destination: string; distance: number; duration: number },
+    @Body() body: { destination: string; distance: number; duration: number; originLat: number; originLng: number; destLat: number; destLng: number },
     @Req() req: any,
   ) {
-    return this.routesService.saveRoute(req.user.sub, body.destination, body.distance, body.duration);
+    return this.routesService.saveRoute(req.user.sub, body.destination, body.distance, body.duration, body.originLat, body.originLng, body.destLat, body.destLng);
   }
 
   @Get('history')

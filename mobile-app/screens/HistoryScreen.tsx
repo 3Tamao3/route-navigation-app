@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { authApi } from '../services/api';
+import { useTheme } from '../context/ThemeContext';
 
 type RouteRecord = {
   id: number;
@@ -31,6 +32,7 @@ const formatDuration = (s: number) => {
 
 const HistoryScreen = ({ route }: Props) => {
   const { token } = route.params;
+  const { colors } = useTheme();
   const [history, setHistory] = useState<RouteRecord[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +51,7 @@ const HistoryScreen = ({ route }: Props) => {
 
   if (loading) {
     return (
-      <View style={styles.center}>
+      <View style={[styles.center, { backgroundColor: colors.bg }]}>
         <ActivityIndicator size="large" color="#1a73e8" />
       </View>
     );
@@ -59,15 +61,16 @@ const HistoryScreen = ({ route }: Props) => {
     <FlatList
       data={history}
       keyExtractor={(item) => String(item.id)}
+      style={{ backgroundColor: colors.bg }}
       contentContainerStyle={history.length === 0 ? styles.center : styles.list}
-      ListEmptyComponent={<Text style={styles.empty}>No routes saved yet.</Text>}
+      ListEmptyComponent={<Text style={[styles.empty, { color: colors.muted }]}>No routes saved yet.</Text>}
       renderItem={({ item }) => (
-        <View style={styles.card}>
-          <Text style={styles.destination} numberOfLines={1}>{item.destination}</Text>
-          <Text style={styles.meta}>
+        <View style={[styles.card, { backgroundColor: colors.card }]}>
+          <Text style={[styles.destination, { color: colors.text }]} numberOfLines={1}>{item.destination}</Text>
+          <Text style={[styles.meta, { color: colors.subtext }]}>
             {formatDistance(item.distance)} · {formatDuration(item.duration)}
           </Text>
-          <Text style={styles.date}>
+          <Text style={[styles.date, { color: colors.muted }]}>
             {new Date(item.createdAt).toLocaleDateString(undefined, {
               day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
             })}

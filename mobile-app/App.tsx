@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, Button, View, Text } from 'react-native';
 import axios from 'axios';
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AppNavigator from './navigation/AppNavigator';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 export type RootStackParamList = {
   Auth: undefined;
@@ -88,13 +89,22 @@ const styles = StyleSheet.create({
   error: { marginTop: 12, color: '#c00' },
 });
 
+const AppRoot = () => {
+  const { isDark } = useTheme();
+  return (
+    <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
+      <Stack.Navigator initialRouteName="Auth" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Auth" component={AuthScreen} />
+        <Stack.Screen name="Main" component={AppNavigator} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
 const App = () => (
-  <NavigationContainer>
-    <Stack.Navigator initialRouteName="Auth" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Auth" component={AuthScreen} />
-      <Stack.Screen name="Main" component={AppNavigator} />
-    </Stack.Navigator>
-  </NavigationContainer>
+  <ThemeProvider>
+    <AppRoot />
+  </ThemeProvider>
 );
 
 export default App;

@@ -5,9 +5,18 @@ import { PrismaService } from '../prisma/prisma.service';
 export class RoutesService {
   constructor(private prisma: PrismaService) {}
 
-  async saveRoute(userId: number, destination: string, distance: number, duration: number) {
+  async saveRoute(
+    userId: number,
+    destination: string,
+    distance: number,
+    duration: number,
+    originLat: number,
+    originLng: number,
+    destLat: number,
+    destLng: number,
+  ) {
     return this.prisma.route.create({
-      data: { userId, origin: 'Current Location', destination, distance, duration },
+      data: { userId, origin: 'Current Location', destination, distance, duration, originLat, originLng, destLat, destLng },
     });
   }
 

@@ -7,22 +7,36 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  email     String   @unique
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  email     String     @unique
   password  String
-  createdAt DateTime @default(now())
+  createdAt DateTime   @default(now())
   routes    Route[]
+  favorites Favorite[]
 }
 
 model Route {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  origin     String
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  origin      String
   destination String
-  distance   Float
-  duration   Float
-  createdAt  DateTime @default(now())
+  distance    Float
+  duration    Float
+  originLat   Float    @default(0)
+  originLng   Float    @default(0)
+  destLat     Float    @default(0)
+  destLng     Float    @default(0)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Favorite {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  destination String
+  createdAt   DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
 }
