@@ -1,8 +1,9 @@
-# route-navigation-app
+# Navigation App
 
 A full-stack mobile navigation app built with React Native (Expo) on the frontend and NestJS on the backend. Features include live GPS navigation with Mapbox, saved favorite destinations, route history with replay, user authentication (JWT), and profile editing.
 
-***Languages & Technologies***
+# Languages & Technologies
+
 **Mobile (Frontend)**
 - TypeScript / React Native (Expo)
 - Mapbox (@rnmapbox/maps) for maps and routing
