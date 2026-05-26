@@ -1,5 +1,5 @@
 # start-bluestack.ps1
-# Connects BlueStacks via ADB, sets up reverse port forwarding, then starts Expo.
+# Restarts ADB server, waits for BlueStacks to register, sets up reverse port forwarding, then starts Expo.
 
 $adb = $null
 
@@ -24,18 +24,26 @@ if (-not $adb) {
 
 Write-Host "ADB found: $adb"
 
-Write-Host "Connecting to BlueStacks on 127.0.0.1:5555..."
-& $adb connect 127.0.0.1:5555
+# Restart ADB server so BlueStacks registers cleanly as a single device
+Write-Host "Restarting ADB server..."
+& $adb kill-server
 Start-Sleep -Seconds 2
+& $adb start-server
+Start-Sleep -Seconds 3
 
 $deviceList = & $adb devices
-if ($deviceList -notmatch "127\.0\.0\.1:5555\s+device") {
-    Write-Warning "BlueStacks device not seen as connected."
-    Write-Warning "In BlueStacks go to Settings -> Advanced -> Enable Android Debug Bridge (ADB), then re-run this script."
+if ($deviceList -notmatch "device") {
+    Write-Warning "No device detected. Make sure BlueStacks is running and ADB is enabled:"
+    Write-Warning "BlueStacks -> Settings -> Advanced -> Enable Android Debug Bridge (ADB)"
+    exit 1
 }
 
-Write-Host "Setting up reverse port forwarding: BlueStacks localhost:8081 -> host localhost:8081"
-& $adb -s 127.0.0.1:5555 reverse tcp:8081 tcp:8081
+Write-Host "Devices connected:"
+$deviceList | Write-Host
+
+Write-Host "Setting up reverse port forwarding for ports 8081 and 8082..."
+& $adb reverse tcp:8081 tcp:8081
+& $adb reverse tcp:8082 tcp:8082
 
 Write-Host ""
 Write-Host "Starting Expo Metro bundler (localhost mode)..."
